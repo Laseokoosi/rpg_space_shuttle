@@ -1,13 +1,13 @@
 ##############################################################################
 # ADD HEADER HERE
 ##############################################################################
-''' EXPLAIN PROGRAM '''
+''' The game itself '''
 ##############################################################################
 # Imports and Global Variables -----------------------------------------------
 # ALL VARIABLES NEED A COMMENT
-location = [2, 0] # row columb
+location = [2, 0] # row column
 
-# ALL VARIABLES NEED A COMMENT
+# the map of the game
 tiles = ["entrance","living room", "kitchen", "basement", "attic"]
 spooky_house = [ [tiles[4], tiles[4], tiles[4], tiles[4]], 
                  [tiles[1], tiles[1], tiles[1], tiles[1]], 
@@ -33,7 +33,7 @@ inventory = {
 
 # Functions -------------------------------------------------------------------
 def Movement():
-    '''EXPLAIN FUNCTION'''
+    '''Aids the direction you want to go in'''
     global location
     for direction in possible_directions:
        print(f"* {direction}")
@@ -42,41 +42,48 @@ def Movement():
     if direction_input.lower() in possible_directions:
         # Add code here
         if direction_input == "north":
-            if location[0] == 0:
+            if location[0] == 1:
               print("Invalid")
             else:
               location[0] = location[0]-1
         elif direction_input == "south":
-            # UPDATE OTHER DIRECTIONS
-            location[0] = location[0]+1
+            if location[0] == 3:
+              print("Invalid")
+            else:
+              location[0] = location[0]+1
         elif direction_input == "east":
-            location[1] = location[0]+1
+            if location[1] == 3:
+              print("Invalid")
+            else:
+              location[1] = location[1]-1
         elif direction_input == "west":
-            location[1] = location[0]-1
+            if location[1] == 0:
+              print("Invalid")
+            else:
+              location[1] = location[1]-1
     elif direction_input.lower() not in possible_directions:
         print("Invalid direction!")
 
 
 def Attack():
-    '''EXPLAIN FUNCTION'''
-    for attack in attack_actions:
-        print(f"*{attack}")
-        attack = input("choose strategy:")
-    print(f"Great, you {attack}!")
+    '''to attack your opponent'''
+    print(f"*{attack_actions}")
+    Attack = input("choose strategy:")
+    print(f"Great, you {Attack}!")
 
 
 def Move():
-    '''EXPLAIN FUNCTION'''
+    '''displays the option under move'''
     for Move in movement_actions:
         print(f"*{Move}")
-        Move = input("choose movement:")
-        if action_input.lower() in movement_actions:
-             print(f"{Move} was a good move!")
+    Move = input("choose movement:")
+    if Move.lower() in movement_actions:
+        print(f"{Move} was a good move!")
         
 
 # Define a function to display the player's inventory
 def display_inventory():
-    '''EXPLAIN FUNCTION'''
+    '''displays the inventory'''
     print("Your inventory:")
     for item, count in inventory.items():
         print(f"{item}: {count}")
@@ -84,7 +91,7 @@ def display_inventory():
 
 # Define a function to add an item to the player's inventory
 def add_item(item, count=1):
-    '''EXPLAIN FUNCTION'''
+    '''list of items you have'''
     if item in inventory:
         inventory[item] += count
     else:
@@ -94,7 +101,7 @@ def add_item(item, count=1):
   
 # Define a function to remove an item from the player's inventory
 def remove_item(item, count=1):
-    '''EXPLAIN FUNCTION'''
+    '''chande/add to the items you have in your treasury'''
     if item in inventory:
         if inventory[item] >= count:
             inventory[item] -= count
@@ -113,16 +120,16 @@ print("character choices:")
 character_choices =["Spiderman","Wonder woman","Iron man"]
 print(f"*{character_choices}")
 character_choices = input("Choose your character:")
-for character in character_choices:
-  if character_choices == "Spiderman":
+if character_choices == "Spiderman":
     print("yay,you chose," + "Spiderman")
-  if character_choices == "Wonder woman":
+elif character_choices == "Wonder woman":
     print("yay,you chose," + "Wonder woman")
-  if character_choices == "Ironman":
+elif character_choices == "Ironman":
     print("yay,you chose," + "Ironman")
 
   # Start the continuous playing loop
 while True:
+    print("\n")
     print(spooky_house[location[0]][location[1]])
     print("What do you want to do?")
     for action in possible_actions:
@@ -132,13 +139,16 @@ while True:
     # checking if the input is in the list possible_actions
     if action_input.lower() in possible_actions:
         if action_input == "explore":
-            print("You will srtat explorting now.")
+            print("You will start exploring now.")
             Movement()
         elif action_input == "attack":
+            print("You can now attack your opponent.")
             Attack()
         elif action_input == "move":
+            print("You are given the oppurtunity to move.")
             Move()
         elif action_input == "check inventory":
+            print("You can check your inventory.")
             display_inventory()
         elif action_input == "quit":
             print(f"{action_input.title()}!")
